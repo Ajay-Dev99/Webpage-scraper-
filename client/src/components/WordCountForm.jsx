@@ -46,7 +46,7 @@ function WordCountForm() {
 
     return (
         <div className='h-screen flex flex-col justify-center items-center'>
-            <div className='flex flex-col items-center gap-9  p-4  justify-center  w-full md:w-auto'>
+            <div className='flex flex-col items-center gap-9  p-4  justify-center  w-full md:w-auto border border-black mb-3'>
                 <h1 className='text-3xl font-bold mb-6'>Webpage Scraper</h1>
                 <div>
                     <input type="text" name="url" id="" className='border border-black p-3 w-full md:w-[29rem] bg-[#cfe2f3] placeholder:text-black' placeholder='Enter Website URL' onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.url} />
@@ -58,7 +58,7 @@ function WordCountForm() {
                 </Button> : <button className='bg-[#cfe2f3] p-3 text-lg  border border-black' onClick={formik.handleSubmit}>Get Insights</button>}
             </div>
 
-            <div>
+            <div className='bg-red-400'>
             <button className='bg-black text-white p-3 text-lg  border border-black' onClick={()=>navigate("/table")}>Go To History</button>
             </div>
 

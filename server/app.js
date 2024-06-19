@@ -29,7 +29,11 @@ app.use(cors({
 app.use("/",userRoutes)
 
 
-
+app.use((req, res, next) => {
+    const error = new Error('Not found');
+    error.status = 404;
+    next(error)
+})
 
 app.listen(process.env.PORT, (error) => {
     if (error) {

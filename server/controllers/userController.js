@@ -16,28 +16,26 @@ const getInsights = async (req, res, next) => {
         const wordCount = countWords(text);
 
         const mediaUrls = [];
-        
+
         $('img').each((index, element) => {
             if (mediaUrls.length >= 10) {
-                return false; // Break the loop if limit is reached
+                return false; 
             }
             let value = $(element).attr('src')
-            if(value)mediaUrls.push(value);
+            if (value) mediaUrls.push(value);
         });
         $('video').each((index, element) => {
             if (mediaUrls.length >= 10) {
-                return false; // Break the loop if limit is reached
+                return false; 
             }
-           
-                let value = $(element).attr('src')
-                if(value)mediaUrls.push(value);
-           
+            let value = $(element).attr('src')
+            if (value) mediaUrls.push(value);
         });
 
         const links = [];
         $('a').each((index, element) => {
             if (links.length >= 10) {
-                return false; 
+                return false;
             }
             const link = $(element).attr('href');
             if (link && (link.startsWith('http://') || link.startsWith('https://'))) {
@@ -68,6 +66,7 @@ const getInsights = async (req, res, next) => {
         res.status(error.status || 500).json({ message: error.message || "Internal Server Error" })
     }
 }
+
 
 const listInsights = async (req, res, next) => {
     try {
@@ -101,7 +100,7 @@ const handleFavouriteStatus = async (req, res, next) => {
         const { status } = req.body
         let updated = await resultModal.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(id) }, { $set: { favouriteStatus: status } })
         if (updated) {
-            return res.status(200).json({ message: status ? "Added To Favourite" : "Removed From Favourite",domain:updated })
+            return res.status(200).json({ message: status ? "Added To Favourite" : "Removed From Favourite", domain: updated })
         }
     } catch (error) {
         console.log(error);
