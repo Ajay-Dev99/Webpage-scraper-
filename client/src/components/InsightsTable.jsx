@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Table } from "flowbite-react";
 import { toast } from 'react-toastify';
 import { handlefavouriteStatus, listInsights } from '../services/userApis';
 import TrimmedText from './TrimmedText';
@@ -13,7 +12,7 @@ function InsightsTable() {
     const [showModal, setShowModal] = useState(false)
     const [domain, SetDomain] = useState({})
     const [dataFetching, setDataFetching] = useState(false)
-    const [loadingButtonId, setLoadingButtonId] = useState(null); 
+    const [loadingButtonId, setLoadingButtonId] = useState(null);
 
     const listResults = () => {
         try {
@@ -37,7 +36,6 @@ function InsightsTable() {
 
     const insightRemoved = () => {
         toast.success()
-        // listResults()
         setResults((prevResults) =>
             prevResults.filter((item) => item._id !== domain._id)
         );
@@ -75,65 +73,79 @@ function InsightsTable() {
             {dataFetching ? <Loading /> :
                 <div className='p-5'>
                     <h1 className='text-4xl font-bold mb-5'>Results</h1>
-                    {results && results.length ? 
-                    <Table >
-                        <Table.Head className=' font-semibold text-black'>
-                            <Table.HeadCell>Domain name</Table.HeadCell>
-                            <Table.HeadCell>WordCount</Table.HeadCell>
-                            <Table.HeadCell>favourite</Table.HeadCell>
-                            <Table.HeadCell>Web-Links</Table.HeadCell>
-                            <Table.HeadCell>Media-Links</Table.HeadCell>
-                            <Table.HeadCell>Actions</Table.HeadCell>
-                            <Table.HeadCell>
-                                <span className="sr-only">Edit</span>
-                            </Table.HeadCell>
-                        </Table.Head>
-                        <Table.Body className="divide-y overflow-x-auto">
-                            {
-                                results && results.length && results.map((result, index) => (
-                                    <Table.Row key={index}>
-                                        <Table.Cell >
-                                            <TrimmedText link={result.domainName} />
-                                        </Table.Cell>
-                                        <Table.Cell className=' font-semibold text-black'>{result.wordCount}</Table.Cell>
-                                        <Table.Cell className=' font-semibold text-black'>{`${result.favouriteStatus}`}</Table.Cell>
-                                        <Table.Cell>
-                                            {
-                                                result.webLinks && result.webLinks.length ? result.webLinks.map((link, index) => (
-
-                                                    <TrimmedText link={link} index={index + 1} />
-                                                )) : <p className=' font-semibold text-black'>No webLinks Available</p>
-                                            }
+                    {results && results.length ?
 
 
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {
-                                                result.mediaLinks && result.mediaLinks.length ? result.mediaLinks.map((link, index) => (
-                                                    <TrimmedText link={link} index={index + 1} key={index} />
-                                                )) : <p className=' font-semibold text-black'>No Media Links Availabele</p>
-                                            }
-                                        </Table.Cell>
-                                        <Table.Cell className='space-y-2'>
-                                            <p> <button className='bg-gray-500 text-white p-1 w-40 text-xs' onClick={() => RemoveItem(result)}>Remove</button></p>
-                                            <button className='bg-gray-500 text-white p-1 w-40 text-xs' onClick={() => handleFavourites(result)}>
-                                            {loadingButtonId === result._id ?
-                                                <Spinner aria-label="Extra small spinner example" size="xs" /> :
-                                                (result.favouriteStatus ? "Remove From Favourite" : "Add To Favorite")}
-                                            </button>
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                                <thead class="text-xs text-gray-700 uppercase ">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 ">
+                                            Domain Name
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            WordCount
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 bg-gray-50 ">
+                                            favourite
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Web-Links
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Media-Links
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        results && results.length && results.map((result, index) => (
+                                            <tr class="border-b border-gray-200">
+                                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 ">
+                                                    <TrimmedText link={result.domainName} />
+                                                </td>
+                                                <td class="px-6 py-4 font-semibold text-black">
+                                                    {result.wordCount}
+                                                </td>
+                                                <td class="px-6 py-4 bg-gray-50 font-semibold text-black">
+                                                    {`${result.favouriteStatus}`}
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    {
+                                                        result.webLinks && result.webLinks.length ? result.webLinks.map((link, index) => (
 
-                                        </Table.Cell>
-                                    </Table.Row>
-                                ))
-                            }
-                        </Table.Body>
-                    </Table> : <p>No results</p>}
+                                                            <TrimmedText link={link} index={index + 1} />
+                                                        )) : <p className=' font-semibold text-black'>No webLinks Available</p>
+                                                    }
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    {
+                                                        result.mediaLinks && result.mediaLinks.length ? result.mediaLinks.map((link, index) => (
+                                                            <TrimmedText link={link} index={index + 1} key={index} />
+                                                        )) : <p className=' font-semibold text-black'>No Media Links Availabele</p>
+                                                    }
+                                                </td>
+                                                <td class="px-6 py-4 space-y-2">
+                                                    <p> <button className='bg-gray-500 text-white p-1 w-40 text-xs' onClick={() => RemoveItem(result)}>Remove</button></p>
+                                                    <button className='bg-gray-500 text-white p-1 w-40 text-xs' onClick={() => handleFavourites(result)}>
+                                                        {loadingButtonId === result._id ?
+                                                            <Spinner aria-label="Extra small spinner example" size="xs" /> :
+                                                            (result.favouriteStatus ? "Remove From Favourite" : "Add To Favorite")}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        : <p>No results</p>}
                     <DeleteModal show={showModal} callBack={handleModal} Domain={domain} insightRemoved={insightRemoved} />
                 </div>
             }
-
-
-
         </>
     )
 }

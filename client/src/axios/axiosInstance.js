@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 const userInstance = axios.create({
-    baseURL: "https://webpage-scraper.onrender.com"
+    baseURL: "http://localhost:4000"
 });
 
 

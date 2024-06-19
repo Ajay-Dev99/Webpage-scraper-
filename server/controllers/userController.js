@@ -101,7 +101,6 @@ const handleFavouriteStatus = async (req, res, next) => {
         const { status } = req.body
         let updated = await resultModal.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(id) }, { $set: { favouriteStatus: status } })
         if (updated) {
-            console.log(updated);
             return res.status(200).json({ message: status ? "Added To Favourite" : "Removed From Favourite",domain:updated })
         }
     } catch (error) {
