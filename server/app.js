@@ -35,6 +35,12 @@ app.use((req, res, next) => {
     next(error)
 })
 
+app.use((err, req, res, next) => {
+    if (err) {
+        res.status(err.status || 500).json({ message: err.message || "Internal Server Error"});
+    } 
+  });
+
 app.listen(process.env.PORT, (error) => {
     if (error) {
         console.log('error', error.message);
