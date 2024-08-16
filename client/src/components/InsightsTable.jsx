@@ -39,8 +39,8 @@ function InsightsTable() {
         setShowModal(true)
     }
 
-    const insightRemoved = () => {
-        toast.success()
+    const insightRemoved = (msg) => {
+        toast.warning(msg)
         setResults((prevResults) =>
             prevResults.filter((item) => item._id !== domain._id)
         );
